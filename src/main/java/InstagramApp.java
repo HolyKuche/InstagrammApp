@@ -1,33 +1,70 @@
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramUserSummary;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class InstagramApp {
+public class InstagramApp extends Application {
 
     private static String username;
     private static String password;
 
-    public static void main(String[] args) throws IOException {
-        disableLogger();
+    private Stage primaryStage;
+    private Pane rootLayout;
 
-        InstagramService service = InstagramService.getInstance();
+    @Override
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
 
-        readLoginInfo();
-        System.out.println("Ждити...");
-        System.out.println();
-        service.login(username, password);
-
-        for (String arg: Arrays.asList(args)) {
-            executeCommand(arg);
+        if (readLoginInfo()) {
+            initMainForm();
+        } else {
+            initLoginForm();
         }
-        System.out.println("Press Enter to exit.");
-        System.in.read();
+    }
+
+    private void initLoginForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(InstagramApp.class.getResource("view/LogIn.fxml"));
+            rootLayout = loader.load();
+
+            primaryStage.setTitle("Authorization");
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    public void initMainForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(InstagramApp.class.getResource("view/FollowersOverview.fxml"));
+            rootLayout = loader.load();
+
+            primaryStage.setTitle("Instagram App - " + username);
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     private static void executeCommand(String command) throws IOException {
@@ -60,13 +97,15 @@ public class InstagramApp {
         }
     }
 
-    private static void readLoginInfo() {
+    private static boolean readLoginInfo() {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("logininfo.txt"))) {
             username = bufferedReader.readLine();
             password = bufferedReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     private static void disableLogger() {
