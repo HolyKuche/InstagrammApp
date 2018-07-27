@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import service.InstagramService;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -25,6 +26,12 @@ public class InstagramApp extends Application {
         this.primaryStage = primaryStage;
 
         if (readLoginInfo()) {
+            try {
+                InstagramService.getInstance().login(username, password);
+            } catch (IOException e) {
+                e.printStackTrace();
+                initLoginForm();
+            }
             initMainForm();
         } else {
             initLoginForm();
