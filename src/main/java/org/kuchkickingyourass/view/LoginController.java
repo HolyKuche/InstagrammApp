@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import org.kuchkickingyourass.service.InstagramService;
 import org.kuchkickingyourass.InstagramApp;
+import org.kuchkickingyourass.service.InstagramService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -35,7 +35,6 @@ public class LoginController implements Initializable {
         System.exit(0);
     }
 
-    @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         readLoginInfo();

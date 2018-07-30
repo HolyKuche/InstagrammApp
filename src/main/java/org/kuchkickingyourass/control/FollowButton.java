@@ -2,45 +2,52 @@ package org.kuchkickingyourass.control;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
 public class FollowButton extends Button {
 
-    private boolean isFollowMode;
+    @FXML
+    private boolean isFollowingMode;
 
+    @FXML
     private EventHandler<ActionEvent> onFollow = null;
 
+    @FXML
     private EventHandler<ActionEvent> onUnfollow = null;
 
+    @FXML
     private String followText= "Follow";
 
+    @FXML
     private String unfollowText = "Unfollow";
 
     public FollowButton() {
         this(true);
     }
 
-    public FollowButton(boolean isFollowMode) {
+    public FollowButton(boolean isFollowingMode) {
         super();
-        setIsFollowMode(isFollowMode);
+        setIsFollowingMode(isFollowingMode);
     }
 
     public void switchMode() {
-        setIsFollowMode(!isFollowMode);
+        setIsFollowingMode(!isFollowingMode);
     }
 
-    public boolean getIsFollowMode() {
-        return isFollowMode;
+    public boolean getIsFollowingMode() {
+        return isFollowingMode;
     }
 
-    public void setIsFollowMode(boolean isFollowMode) {
-        if (this.isFollowMode = isFollowMode) {
-            setOnAction(onUnfollow);
-            setText(unfollowText);
-            setTextFill(Color.RED);
-        } else {
+    public void setIsFollowingMode(boolean isFollowingMode) {
+        this.isFollowingMode = isFollowingMode;
+        if (isFollowingMode) {
             setOnAction(onFollow);
+            setText(followText);
+            setTextFill(Color.GREEN);
+        } else {
+            setOnAction(onUnfollow);
             setText(unfollowText);
             setTextFill(Color.RED);
         }
@@ -52,6 +59,9 @@ public class FollowButton extends Button {
 
     public void setOnFollow(EventHandler<ActionEvent> onFollow) {
         this.onFollow = onFollow;
+        if (isFollowingMode) {
+            setOnAction(onFollow);
+        }
     }
 
     public EventHandler<ActionEvent> getOnUnfollow() {
@@ -60,6 +70,9 @@ public class FollowButton extends Button {
 
     public void setOnUnfollow(EventHandler<ActionEvent> onUnfollow) {
         this.onUnfollow = onUnfollow;
+        if (!isFollowingMode) {
+            setOnAction(onUnfollow);
+        }
     }
 
     public String getFollowText() {
@@ -68,6 +81,9 @@ public class FollowButton extends Button {
 
     public void setFollowText(String followText) {
         this.followText = followText;
+        if (isFollowingMode) {
+            setText(followText);
+        }
     }
 
     public String getUnfollowText() {
@@ -76,5 +92,8 @@ public class FollowButton extends Button {
 
     public void setUnfollowText(String unfollowText) {
         this.unfollowText = unfollowText;
+        if (!isFollowingMode) {
+            setText(unfollowText);
+        }
     }
 }

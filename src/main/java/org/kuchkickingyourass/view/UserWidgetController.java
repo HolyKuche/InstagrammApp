@@ -1,5 +1,7 @@
 package org.kuchkickingyourass.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -26,7 +28,8 @@ public class UserWidgetController {
     @FXML
     private Label fullNameLabel;
 
-    private FollowButton actionButton;
+    @FXML
+    private FollowButton followButton;
 
     public UserWidgetController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserWidget.fxml"));
@@ -46,41 +49,31 @@ public class UserWidgetController {
         profilePicImg.setImage(new Image(user.getProfilePicUrl()));
         usernameLabel.setText(user.getUsername());
         fullNameLabel.setText(user.getFullName());
+        followButton.setOnFollow(getFollowHandler(user));
+        followButton.setOnUnfollow(getUnfollowHandler(user));
+    }
 
-        actionButton = new FollowButton(false) {
-            {
-                setLayoutX(223);
-                setLayoutY(20);
-                setMnemonicParsing(false);
-                setOnFollow(event -> {
-                    follow(user);
-                    actionButton.switchMode();
-                });
-                setOnUnfollow(event -> {
-                    unfollow(user);
-                    actionButton.switchMode();
-                });
-                AnchorPane.setRightAnchor(this, 10.);
+    private EventHandler<ActionEvent> getFollowHandler(User user) {
+        return event -> {
+            InstagramService service = InstagramService.getInstance();
+            try {
+                service.follow(user.getPk());
+                followButton.switchMode();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         };
-        rootNode.getChildren().add(actionButton);
     }
 
-    private void follow(User user) {
-        InstagramService service = InstagramService.getInstance();
-        try {
-            service.follow(user.getPk());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void unfollow(User user) {
-        InstagramService service = InstagramService.getInstance();
-        try {
-            service.unfollow(user.getPk());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private EventHandler<ActionEvent> getUnfollowHandler(User user) {
+        return event -> {
+            InstagramService service = InstagramService.getInstance();
+            try {
+                service.unfollow(user.getPk());
+                followButton.switchMode();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
     }
 }
