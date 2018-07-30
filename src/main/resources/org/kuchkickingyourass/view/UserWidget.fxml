@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import org.kuchkickingyourass.control.FollowButton?>
+
+<AnchorPane fx:id="rootNode" maxHeight="107.0" minWidth="300.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="profilePicImg" fitHeight="65.0" fitWidth="65.0" layoutX="-51.0" layoutY="-25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label fx:id="usernameLabel" layoutX="65.0" layoutY="7.0" text="Username">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
+      </Label>
+      <Label fx:id="fullNameLabel" layoutX="65.0" layoutY="32.0" text="Full name">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
+      </Label>
+      <FollowButton fx:id="followButton" layoutX="223.0" layoutY="20.0" mnemonicParsing="false" isFollowMode="false" AnchorPane.rightAnchor="10.0" />
+   </children>
+</AnchorPane>

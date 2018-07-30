@@ -1,11 +1,14 @@
-package view;
+package org.kuchkickingyourass.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import service.InstagramService;
+import org.kuchkickingyourass.service.InstagramService;
+import org.kuchkickingyourass.InstagramApp;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,19 +28,25 @@ public class LoginController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        InstagramApp.initMainForm();
     }
 
     public void cancel() {
         System.exit(0);
     }
 
-    private void openFollowersOverviewForm() {
-
-    }
-
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        readLoginInfo();
+    }
 
+    private void readLoginInfo() {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("logininfo.txt"))) {
+            usernameCtrl.setText(bufferedReader.readLine());
+            passwordCtrl.setText(bufferedReader.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

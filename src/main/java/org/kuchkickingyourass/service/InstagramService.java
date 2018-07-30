@@ -1,9 +1,7 @@
-package service;
+package org.kuchkickingyourass.service;
 
 import org.brunocvcunha.instagram4j.Instagram4j;
-import org.brunocvcunha.instagram4j.requests.InstagramGetUserFollowersRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetUserFollowingRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramSearchUsernameRequest;
+import org.brunocvcunha.instagram4j.requests.*;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramSearchUsernameResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramUser;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramUserSummary;
@@ -73,5 +71,13 @@ public final class InstagramService {
         return followings.stream()
                 .filter(user -> nonReciprocalFollowingIds.contains(user.getPk()))
                 .collect(Collectors.toList());
+    }
+
+    public void follow(long pk) throws IOException {
+        instagram.sendRequest(new InstagramFollowRequest(pk));
+    }
+
+    public void unfollow(long pk) throws IOException {
+        instagram.sendRequest(new InstagramUnfollowRequest(pk));
     }
 }
