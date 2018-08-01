@@ -25,6 +25,6 @@
             <Insets left="5.0" />
          </padding>
       </Label>
-      <FollowButton fx:id="followButton" layoutX="223.0" layoutY="20.0" mnemonicParsing="false" isFollowingMode="false" AnchorPane.rightAnchor="10.0" />
+      <FollowButton fx:id="followButton" layoutX="223.0" layoutY="20.0" mnemonicParsing="false" AnchorPane.rightAnchor="10.0" />
    </children>
 </AnchorPane>

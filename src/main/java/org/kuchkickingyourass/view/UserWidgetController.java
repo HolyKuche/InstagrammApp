@@ -51,6 +51,7 @@ public class UserWidgetController {
         fullNameLabel.setText(user.getFullName());
         followButton.setOnFollow(getFollowHandler(user));
         followButton.setOnUnfollow(getUnfollowHandler(user));
+        followButton.setIsFollowingMode(!user.getFollowing());
     }
 
     private EventHandler<ActionEvent> getFollowHandler(User user) {
@@ -58,6 +59,7 @@ public class UserWidgetController {
             InstagramService service = InstagramService.getInstance();
             try {
                 service.follow(user.getPk());
+                user.setFollowing(true);
                 followButton.switchMode();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -70,6 +72,7 @@ public class UserWidgetController {
             InstagramService service = InstagramService.getInstance();
             try {
                 service.unfollow(user.getPk());
+                user.setFollowing(false);
                 followButton.switchMode();
             } catch (IOException e) {
                 e.printStackTrace();

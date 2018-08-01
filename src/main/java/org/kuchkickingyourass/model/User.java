@@ -1,9 +1,6 @@
 package org.kuchkickingyourass.model;
 
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramUserSummary;
 
 public class User {
@@ -11,22 +8,26 @@ public class User {
     private final StringProperty username;
     private final StringProperty fullName;
     private final StringProperty profilePicUrl;
+    private final BooleanProperty following;
 
     public User(Long pk,
                 String username,
                 String fullName,
-                String profilePicUrl) {
+                String profilePicUrl,
+                Boolean following) {
         this.pk = new SimpleLongProperty(pk);
         this.username = new SimpleStringProperty(username);
         this.fullName = new SimpleStringProperty(fullName);
         this.profilePicUrl = new SimpleStringProperty(profilePicUrl);
+        this.following = new SimpleBooleanProperty(following);
     }
 
     public User(InstagramUserSummary instagramUser) {
         this(instagramUser.getPk(),
                 instagramUser.getUsername(),
                 instagramUser.getFull_name(),
-                instagramUser.getProfile_pic_url());
+                instagramUser.getProfile_pic_url(),
+                true);
     }
 
     public long getPk() {
@@ -75,5 +76,17 @@ public class User {
 
     public void setProfilePicUrl(String profilePicUrl) {
         this.profilePicUrl.set(profilePicUrl);
+    }
+
+    public boolean getFollowing() {
+        return following.get();
+    }
+
+    public BooleanProperty followingProperty() {
+        return following;
+    }
+
+    public void setFollowing(boolean following) {
+        this.following.set(following);
     }
 }
