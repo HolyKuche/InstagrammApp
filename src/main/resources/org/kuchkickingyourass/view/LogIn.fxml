@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="147.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kuchkickingyourass.view.LoginController">
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kuchkickingyourass.view.LoginController">
    <children>
       <TextField fx:id="usernameCtrl" alignment="CENTER" promptText="Username">
          <VBox.margin>
@@ -19,10 +15,16 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
       </PasswordField>
+      <Label fx:id="errorLabel" visible="false" textFill="RED">
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </VBox.margin>
+      </Label>
       <ButtonBar prefHeight="16.0" prefWidth="451.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#logIn" text="Log In" />
-          <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+          <ProgressIndicator fx:id="spinner" visible="false" GridPane.columnIndex="1" />
+          <Button fx:id="logInButton" mnemonicParsing="false" onAction="#logIn" text="Log In" />
+          <Button mnemonicParsing="false" onAction="#exit" text="Exit" />
         </buttons>
          <VBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

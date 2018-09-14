@@ -10,11 +10,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.kuchkickingyourass.control.FollowButton;
 import org.kuchkickingyourass.model.User;
-import org.kuchkickingyourass.service.InstagramService;
+import org.kuchkickingyourass.service.ControlService;
+import org.kuchkickingyourass.service.LoginService;
 
 import java.io.IOException;
 
 public class UserWidgetController {
+
+    private ControlService service;
 
     @FXML
     private AnchorPane rootNode;
@@ -46,6 +49,7 @@ public class UserWidgetController {
     }
 
     public void init(User user) {
+        service = LoginService.getInstance().getControlService();
         profilePicImg.setImage(new Image(user.getProfilePicUrl()));
         usernameLabel.setText(user.getUsername());
         fullNameLabel.setText(user.getFullName());
@@ -56,7 +60,6 @@ public class UserWidgetController {
 
     private EventHandler<ActionEvent> getFollowHandler(User user) {
         return event -> {
-            InstagramService service = InstagramService.getInstance();
             try {
                 service.follow(user.getPk());
                 user.setFollowing(true);
@@ -69,7 +72,6 @@ public class UserWidgetController {
 
     private EventHandler<ActionEvent> getUnfollowHandler(User user) {
         return event -> {
-            InstagramService service = InstagramService.getInstance();
             try {
                 service.unfollow(user.getPk());
                 user.setFollowing(false);

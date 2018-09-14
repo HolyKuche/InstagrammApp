@@ -10,32 +10,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class InstagramService {
+public class ControlService {
 
-    private static InstagramService service = null;
-    private static Instagram4j instagram;
-    private static InstagramUser user;
+    private Instagram4j instagram;
+    private InstagramUser user;
 
-    private InstagramService() {}
-
-    public static InstagramService getInstance() {
-        if (service == null) {
-            service = new InstagramService();
-        }
-        return service;
-    }
-
-    public void login(String username, String password) throws IOException {
-        instagram = Instagram4j.builder().username(username).password(password).build();
-
-        instagram.setup();
-        instagram.login();
-
-        user = getUser(username);
-    }
-
-    public InstagramUser getMe() {
-        return user;
+    ControlService(Instagram4j instagram) {
+        this.instagram = instagram;
+        user = getUser(instagram.getUsername());
     }
 
     public InstagramUser getUser(String username) {
